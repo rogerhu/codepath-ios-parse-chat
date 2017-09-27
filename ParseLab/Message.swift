@@ -21,14 +21,3 @@ class Message: PFObject, PFSubclassing {
     }
 }
 
-class Post: PFObject, PFSubclassing {
-    @NSManaged var media : PFFile
-    @NSManaged var author: PFUser
-    @NSManaged var caption: String
-    @NSManaged var likesCount: Int
-    @NSManaged var commentsCount: Int
-
-    class func parseClassName() -> String {
-        return "Post"
-    }
-}
