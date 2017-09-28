@@ -21,10 +21,7 @@ class ViewController: UIViewController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        if(PFUser.current() != nil)
-        {
-            self.performSegue(withIdentifier: "firstSegue", sender: nil)
-        }
+
         // Dispose of any resources that can be recreated.
     }
 

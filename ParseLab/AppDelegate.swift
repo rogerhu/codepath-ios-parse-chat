@@ -36,15 +36,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(receiveWillSendURLRequestNotification), name: Notification.Name.ParseWillSendURLRequestNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(receiveDidReceiveURLResponseNotification), name: Notification.Name.ParseDidReceiveURLResponseNotification, object: nil)
 
+        let isLoggedIn = PFUser.current() != nil
+
+        if (isLoggedIn) {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            window?.rootViewController = storyboard.instantiateViewController(withIdentifier: "ChatViewController")
+        }
+
         return true
     }
 
     @objc func receiveWillSendURLRequestNotification(notification: Notification) {
-        let request = notification.userInfo?[PFNetworkNotificationURLRequestUserInfoKey];
+        let request = notification.userInfo?[PFNetworkNotificationURLRequestUserInfoKey] as! URLRequest
 
-        if let nsRequest = request as? NSMutableURLRequest {
-            print("URL: \(nsRequest.url?.absoluteString)")
-        }
+        print("URL: \(request.url!.absoluteString)")
+        print("Method: \(String(describing: request.httpMethod))")
+        print("Headers: \(String(describing: request.allHTTPHeaderFields))")
+//        print("Request Body: \(request.httpBody.encode(to: NSUTF8StringEncoding.rawValue))!")
     }
 
     @objc func receiveDidReceiveURLResponseNotification(notification: Notification) {
